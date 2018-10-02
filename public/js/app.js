@@ -11359,6 +11359,7 @@ window.Vue = __webpack_require__(36);
 /**
  * Componentes
  */
+Vue.component('notification', __webpack_require__(48));
 Vue.component('notifications', __webpack_require__(39));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -47365,11 +47366,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        this.loadNotifications();
+    },
+
     computed: {
         notifications: function notifications() {
-            return [1, 2, 3, 4, 5, 6, 7, 8];
+            return this.notificationsItems;
+        }
+    },
+    data: function data() {
+        return {
+            notificationsItems: []
+        };
+    },
+
+    methods: {
+        loadNotifications: function loadNotifications() {
+            var _this = this;
+
+            axios.get('/notifications').then(function (response) {
+                return _this.notificationsItems = response.data.notifications;
+            });
         }
     }
 });
@@ -47384,7 +47406,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("li", { staticClass: "nav-item dropdown" }, [
-      _vm._m(0),
+      _c(
+        "a",
+        {
+          staticClass: "nav-link dropdown-toggle",
+          attrs: {
+            id: "navbarDropdown",
+            href: "#",
+            role: "button",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          }
+        },
+        [
+          _vm._v("\n            Notificações "),
+          _c("span", { staticClass: "badge badge-danger" }, [
+            _vm._v(_vm._s(_vm.notificationsItems.length))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "caret" })
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -47394,19 +47437,10 @@ var render = function() {
         },
         [
           _vm._l(_vm.notifications, function(notification) {
-            return _c(
-              "a",
-              {
-                key: notification,
-                staticClass: "dropdown-item",
-                attrs: { href: "" }
-              },
-              [
-                _vm._v(
-                  "\n                " + _vm._s(notification) + "\n            "
-                )
-              ]
-            )
+            return _c("notification", {
+              key: notification.id,
+              attrs: { notification: notification.data }
+            })
           }),
           _vm._v(" "),
           _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
@@ -47418,31 +47452,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle",
-        attrs: {
-          id: "navbarDropdown",
-          href: "#",
-          role: "button",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _vm._v("\n            Notificações "),
-        _c("span", { staticClass: "caret" })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -47457,6 +47467,110 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(40)
+/* script */
+var __vue_script__ = __webpack_require__(49)
+/* template */
+var __vue_template__ = __webpack_require__(50)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/notifications/Notification.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6f79945d", Component.options)
+  } else {
+    hotAPI.reload("data-v-6f79945d", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['notification'],
+    computed: {
+        comment: function comment() {
+            return this.notification.comment;
+        }
+    }
+});
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+      _vm._v(
+        "\n        " +
+          _vm._s(_vm.comment.user.name) +
+          " comentou  " +
+          _vm._s(_vm.comment.title) +
+          "\n    "
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6f79945d", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

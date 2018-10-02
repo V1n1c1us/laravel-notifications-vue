@@ -11,7 +11,7 @@
                     :key="notification.id"
                     :notification="notification">
                 </notification>
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="" @click.prevent="markAllAsRead">
                     Limpar Notificações
                 </a>
             </div>
@@ -27,6 +27,11 @@ export default {
     computed: {
         notifications () {
             return this.$store.state.notifications.items
+        }
+    },
+    methods: {
+        markAllAsRead () {
+            this.$store.dispatch('markAllAsRead')
         }
     }
 }

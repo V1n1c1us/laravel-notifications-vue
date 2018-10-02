@@ -14,7 +14,7 @@ class NotificationController extends Controller
     //retorna todas notificaçoes do user logado
     public function notifications(Request $request)
     {
-        $notifications = $request->user()->unreadnotifications;
+        $notifications = $request->user()->unreadNotifications;
 
         //retorna um json
         return response()->json(compact('notifications'));
@@ -29,5 +29,11 @@ class NotificationController extends Controller
                                     ->first();
         if($notification)
             $notification->markAsRead();
+    }
+
+    //marca todas como lida
+    public function markAllAsRead(Request $request)
+    {
+        $request->user()->unreadNotifications->maskAsRead();
     }
 }

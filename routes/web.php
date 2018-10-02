@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+$this->put('notification-read', 'NotificationController@markAsRead');
 $this->get('notifications', 'NotificationController@notifications')->name('notifications');
 
 $this->post('comment','Posts\CommentController@store')->name('comment.store');

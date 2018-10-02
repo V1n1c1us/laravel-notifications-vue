@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-
+import store from './vuex/store'
 window.Vue = require('vue');
 
 /**
@@ -23,5 +23,6 @@ Vue.component('notifications', require('./components/notifications/Notifications
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });
